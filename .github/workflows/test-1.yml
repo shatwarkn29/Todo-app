@@ -1,0 +1,74 @@
+name: Node.js CI for Multiple Projects
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ecommerce-website:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # Replace with the required Node.js version
+
+      # Cache node_modules for the ecommerce project
+      - name: Cache node_modules for ecommerce
+        uses: actions/cache@v3
+        with:
+          path: simple-ecommerce-website/node_modules
+          key: ${{ runner.os }}-ecommerce-node-modules-${{ hashFiles('simple-ecommerce-website/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-ecommerce-node-modules-
+
+      # Install dependencies for ecommerce project
+      - name: Install dependencies for ecommerce
+        run: npm install
+        working-directory: simple-ecommerce-website
+
+      # Run tests for ecommerce project (optional)
+      - name: Run tests for ecommerce
+        run: npm test
+        working-directory: simple-ecommerce-website
+
+  todo-app:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20" # Replace with the required Node.js version
+
+      # Cache node_modules for the todo app
+      - name: Cache node_modules for todo app
+        uses: actions/cache@v3
+        with:
+          path: todo-app/node_modules
+          key: ${{ runner.os }}-todo-node-modules-${{ hashFiles('todo-app/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-todo-node-modules-
+
+      # Install dependencies for todo app
+      - name: Install dependencies for todo app
+        run: npm install
+        working-directory: todo-app
+
+      # Run tests for todo app (optional)
+      - name: Run tests for todo app
+        run: npm test
+        working-directory: todo-app
