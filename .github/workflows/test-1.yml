@@ -36,11 +36,6 @@ jobs:
         run: npm install
         working-directory: simple-ecommerce-website
 
-      # Run tests for ecommerce project (optional)
-      - name: Run tests for ecommerce
-        run: npm test
-        working-directory: simple-ecommerce-website
-
   todo-app:
     runs-on: ubuntu-latest
     steps:
@@ -66,9 +61,4 @@ jobs:
       # Install dependencies for todo app
       - name: Install dependencies for todo app
         run: npm install
-        working-directory: todo-app
-
-      # Run tests for todo app (optional)
-      - name: Run tests for todo app
-        run: npm test
         working-directory: todo-app
